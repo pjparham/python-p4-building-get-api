@@ -43,17 +43,20 @@ def games():
 def game_by_id(id):
     game = Game.query.filter(Game.id == id).first()
 
-    game_dict = {
-        "title": game.title,
-        "genre": game.genre,
-        "platform": game.platform,
-        "price": game.price,
-    }
+    game_dict = game.to_dict()
+
+    # game_dict = {
+    #     "title": game.title,
+    #     "genre": game.genre,
+    #     "platform": game.platform,
+    #     "price": game.price,
+    # }
 
     response = make_response(
-        game_dict,
+        jsonify(game_dict),
         200
     )
+    response.headers["Content-Type"] = "application/json"
 
     return response
 
